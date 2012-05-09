@@ -28,8 +28,6 @@ TraineoLogger::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
-  config.time_zone = 'Brisbane'
-
   config.notes_per_page = 25
 
   config.evernote_domain = 'sandbox.evernote.com'

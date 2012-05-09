@@ -43,7 +43,7 @@ class LoggerController < ApplicationController
     filter.order = 1
     notes = @note_store.findNotes(@auth_token, filter, @per_page * (page.to_i-1), @per_page)
     notes.notes.each do |note|
-      note.created = Time.at(note.created/1000).strftime("%B %-d, %Y %H:%M")
+      note.created = Time.at(note.created/1000).getlocal('+10:00').strftime("%B %-d, %Y %H:%M")
     end
 
     @notes = notes
@@ -59,7 +59,7 @@ class LoggerController < ApplicationController
     @note_array = []
     notes.each do |note|
       retrieved_note = @note_store.getNote(@auth_token, note, false, false, false, false)
-      date = Time.at(retrieved_note.created/1000).strftime("%B %-d, %Y")
+      date = Time.at(retrieved_note.created/1000).getlocal('+10:00').strftime("%B %-d, %Y")
       weight = retrieved_note.title.split(" ")[0].to_f
       weight = fixweight(weight)
 
