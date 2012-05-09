@@ -57,4 +57,21 @@ TraineoLogger::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+
+
+  config.notes_per_page = 25
+
+  config.evernote_domain = 'sandbox.evernote.com'
+  config.evernote_domain = 'www.evernote.com'
+  config.evernote_user_url = 'https://' + config.evernote_domain + '/edam/user'
+  config.evernote_notestore_url = 'http://' + config.evernote_domain + '/edam/note'
+
+  config.evernote_key = 'zorfling'
+  config.evernote_secret = '9d4454c8fad99993'
+  config.evernote_username = 'zorfling'
+  config.evernote_password = 'D00g1312'
+
+  config.traineo_username = 'zorfling'
+  config.traineo_password = 'D00g1312'
+
 end
