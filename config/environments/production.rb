@@ -58,7 +58,8 @@ TraineoLogger::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-
+  config.time_zone = 'Brisbane'
+  
   config.notes_per_page = 25
 
   config.evernote_domain = 'sandbox.evernote.com'

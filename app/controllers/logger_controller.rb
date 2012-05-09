@@ -43,7 +43,7 @@ class LoggerController < ApplicationController
     filter.order = 1
     notes = @note_store.findNotes(@auth_token, filter, @per_page * (page.to_i-1), @per_page)
     notes.notes.each do |note|
-      note.created = Time.at(note.created/1000).strftime("%B %-d, %Y")
+      note.created = Time.at(note.created/1000).strftime("%B %-d, %Y %H:%M")
     end
 
     @notes = notes
