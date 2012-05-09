@@ -1,0 +1,1 @@
+Move url to config. Add paging to notes.

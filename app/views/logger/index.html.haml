@@ -1,0 +1,23 @@
+%h1 Hello
+= @page
+= @auth
+= @token
+= @found
+%br
+%ol
+  - @notebooks.each do |notebook|
+    %li #{notebook.name}
+
+%form{:method => "post", :action => log_path}
+  %ul
+    - @notes.notes.each do |note|
+      %li
+        %input{:type => 'checkbox', :name => "notes[]", :id => "notes_#{note.guid}", :value => "#{note.guid}"}
+        %label{:for => "notes_#{note.guid}"}
+          %span.date
+            #{note.created}
+          %span.title
+            #{note.title}
+  %input{:type => 'submit'}
+= link_to "Previous #{@per_page}", logger_index_url(@prev_page)
+= link_to "Next #{@per_page}", logger_index_url(@next_page)
