@@ -1,1 +1,1 @@
-Move url to config. Add paging to notes.
+Set per page to 10
