@@ -11,18 +11,29 @@ class LoggerController < ApplicationController
         :consumer_secret => Rails.application.config.evernote_secret
     }
 
-    @user_store = Evernote::UserStore.new(Rails.application.config.evernote_user_url, config)
 
-    auth_result = @user_store.authenticate
 
-    user = auth_result.user
-    @auth_token = auth_result.authenticationToken
+    # client = EvernoteOAuth::Client.new(
+    #   :consumer_key => config.consumer_key,
+    #   :consumer_secret => config.consumer_secret,
+    #   :sandbox => true
+    # )
+    # @auth_token = "S=s38:U=3e8fa6:E=14392fb3221:C=13c3b4a0621:P=1cd:A=en-devtoken:H=e0dc3bc1a9cf7d73de357385c18a2552"
+    # # @user_store = EvernoteOAuth::Client.new(:token => token).user_store
+    # # user = @user_store.getUser()
+    # @client = EvernoteOAuth::Client.new(:token => @auth_token)
+    # puts @client.note_store
+    # @note_store = EvernoteOAuth::Client.new(:token => @auth_token).note_store
 
-    note_store_url = Rails.application.config.evernote_notestore_url + "/#{user.shardId}"
-    @note_store = Evernote::NoteStore.new(note_store_url)
+  end
+
+  def login
   end
 
   def index
+    token = session[:authtoken]
+    client = EvernoteOAuth::Client.new(:token => token)
+    @note_store = client.note_store
 
     page = params[:page] || 1
     @next_page = page.to_i + 1
@@ -34,31 +45,39 @@ class LoggerController < ApplicationController
 
     @per_page = Rails.application.config.notes_per_page
 
-    @notebooks = @note_store.listNotebooks(@auth_token)
+    @notebooks = @note_store.listNotebooks
     @found = "Found #{@notebooks.size} notebooks:"
-    default_notebook = @notebooks[3]
+
+    default_notebook = nil
+    @notebooks.each do |notebook|
+      if notebook.name == "Weight"
+        default_notebook = notebook
+      end
+    end
 
     filter = Evernote::EDAM::NoteStore::NoteFilter.new;
     filter.notebookGuid = default_notebook.guid
     filter.order = 1
-    notes = @note_store.findNotes(@auth_token, filter, @per_page * (page.to_i-1), @per_page)
+    notes = @note_store.findNotes(filter, @per_page * (page.to_i-1), @per_page)
     notes.notes.each do |note|
       note.created = Time.at(note.created/1000).getlocal('+10:00').strftime("%B %-d, %Y %H:%M")
-    end
-
+    end 
     @notes = notes
-
     render :index, :layout => "application"
   end
 
   def log
+    token = session[:authtoken]
+    client = EvernoteOAuth::Client.new(:token => token)
+    @note_store = client.note_store
+
     traineo = Traineo.new
 
     notes = params["notes"]
 
     @note_array = []
     notes.each do |note|
-      retrieved_note = @note_store.getNote(@auth_token, note, false, false, false, false)
+      retrieved_note = @note_store.getNote(note, false, false, false, false)
       date = Time.at(retrieved_note.created/1000).getlocal('+10:00').strftime("%B %-d, %Y")
       weight = retrieved_note.title.split(" ")[0].to_f
       weight = fixweight(weight)

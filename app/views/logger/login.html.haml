@@ -1,0 +1,4 @@
+= link_to 'Login via Evernote', '/auth/evernote'
+
+- if session[:authtoken]
+    = link_to 'Start logging', '/logindex'

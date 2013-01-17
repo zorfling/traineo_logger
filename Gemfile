@@ -27,8 +27,8 @@ gem 'haml'
 
 gem 'mechanize'
 
-gem "evernote", "~> 1.2.0"
-
+gem 'evernote_oauth'
+gem 'omniauth-evernote'
 # Use unicorn as the web server
 # gem 'unicorn'
 

@@ -2,11 +2,19 @@ TraineoLogger::Application.routes.draw do
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
-  root :to => 'logger#index'
+  root :to => 'logger#login'
+  
   resources :logger
+  get '/auth/:provider/callback' => 'login#callback'
+  get '/logout' => 'login#logout', :as => 'logout'
+  get '/oauth_failure' => 'login#oauth_failure'
+
+  match '/logindex' => 'logger#index', :as => :logindex
   match '/log' => 'logger#log', :as => :log
   match '/manual_log' => 'logger#manual_log'
   match '/:page' => 'logger#index', :as => :logger_index
+
+
 
 
   # Sample of regular route:
