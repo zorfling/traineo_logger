@@ -1,4 +1,4 @@
 development:
   consumer_key: 'zorfling-1577'
   consumer_secret: '151bf0aa575911c1'
-  sandbox: true
+  sandbox: false
