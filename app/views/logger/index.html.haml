@@ -19,6 +19,7 @@
           %span.title
             #{note.title}
   %input{:type => 'submit'}
+  %input{:type => 'hidden', :name => 'next_page', :value => @next_page}
 
 = link_to "Previous #{@per_page}", logger_index_url(@prev_page)
 = link_to "Next #{@per_page}", logger_index_url(@next_page)

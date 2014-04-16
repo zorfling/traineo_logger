@@ -3,3 +3,11 @@ Log
 - @note_array.each do |note|
   = note.inspect
   %br
+%br
+%script{:type => "text/javascript"}
+  var next_page = '#{logger_index_url(@next_page)}';
+  :plain
+
+      setTimeout(function() {
+        document.location = next_page;
+      }, 1000);

@@ -61,7 +61,7 @@ class LoggerController < ApplicationController
     notes = @note_store.findNotes(filter, @per_page * (page.to_i-1), @per_page)
     notes.notes.each do |note|
       note.created = Time.at(note.created/1000).getlocal('+10:00').strftime("%B %-d, %Y %H:%M")
-    end 
+    end
     @notes = notes
     render :index, :layout => "application"
   end
@@ -74,6 +74,7 @@ class LoggerController < ApplicationController
     traineo = Traineo.new
 
     notes = params["notes"]
+    @next_page = params["next_page"]
 
     @note_array = []
     notes.each do |note|
