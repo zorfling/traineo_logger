@@ -19,14 +19,17 @@
           %span.title
             #{note.title}
   %input{:type => 'submit'}
+
 = link_to "Previous #{@per_page}", logger_index_url(@prev_page)
 = link_to "Next #{@per_page}", logger_index_url(@next_page)
+%br
+= link_to "Traineo Page", "http://traineo.com/weight"
 
 %script{:type => "text/javascript"}
   :plain
 
     $().ready(function() {
-      
+
       var clickEm = function() {
         $(".weight-check").each(function(idx, elem) {
           var toggle = !$(elem).prop('checked');
